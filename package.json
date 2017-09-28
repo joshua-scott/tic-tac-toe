@@ -1,0 +1,30 @@
+{
+  "name": "noughts-and-crosses",
+  "version": "1.0.0",
+  "description": "aka tic-tac-toe, written in vanilla es6 js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jscott313/noughts-and-crosses.git"
+  },
+  "author": "Joshua Scott jscott313@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jscott313/noughts-and-crosses/issues"
+  },
+  "homepage": "https://github.com/jscott313/noughts-and-crosses#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "browser-sync": "^2.18.13",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-babel": "^7.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1"
+  }
+}
