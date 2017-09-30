@@ -1,1 +1,20 @@
-@import 'normalize'
+@import 'normalize';
+
+$lightgrey: #eee;
+$darkgrey: #555;
+
+.board {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+}
+
+.cell {
+  width: 100px;
+  height: 100px;
+  background: $lightgrey;
+  border: 1px solid $darkgrey;
+}

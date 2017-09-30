@@ -1,4 +1,2 @@
-'use strict';
-
-alert('hi');
+"use strict";
 //# sourceMappingURL=app.js.map
