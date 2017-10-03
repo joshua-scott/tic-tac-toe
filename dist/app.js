@@ -92,14 +92,14 @@ cells.forEach(c => c.addEventListener('click', makeMove));
 function cpuMove() {
   movesMade++;
 
-  if (winOrBlock('win')) return;else if (winOrBlock('block')) return;else if (goInCentre()) return;else goInRemaining();
+  if (winOrBlock('win')) return;else if (winOrBlock('block')) return;else if (goInCentre()) return;else if (offensiveMove()) return;else goInRemaining();
 }
 
 function winOrBlock(which) {
   const letter = which === 'win' ? 'O' : 'X';
   // Look for 2 in a row, where we can win or block a win
   const board = buildBoard();
-  const twos = wins.filter(win => twoInARow(board, win, letter));
+  const twos = wins.filter(win => isPotentialLineForming(board, win, letter, 1));
 
   if (twos.length === 0) {
     // We can't win/block on this turn
@@ -116,8 +116,8 @@ function winOrBlock(which) {
   }
 }
 
-// Check if there are two letters out of three, with a blank space
-function twoInARow(board, winningPattern, letter) {
+// Check if there are: two OR one matching letters out of three, with one OR two blank spaces
+function isPotentialLineForming(board, winningPattern, letter, blanksRequired) {
   let blanks = 0;
   let letters = 0;
 
@@ -129,7 +129,11 @@ function twoInARow(board, winningPattern, letter) {
       letters++;
     }
   }
-  return blanks === 1 && letters === 2;
+  if (blanksRequired === 1) {
+    return blanks === 1 && letters === 2;
+  } else {
+    return blanks === 2 && letters === 1;
+  }
 }
 
 function goInCentre() {
@@ -138,6 +142,26 @@ function goInCentre() {
     return true;
   } else {
     return false;
+  }
+}
+
+function offensiveMove() {
+  // Look for a 'O' with two blank spaces, where we can make it one away from a win
+  const board = buildBoard();
+  const moves = wins.filter(win => isPotentialLineForming(board, win, 'O', 2));
+
+  if (moves.length === 0) {
+    // We can't go one the offensive on this turn
+    return false;
+  } else {
+    // We can! Grab one of the winning moves, and get one step closer to it
+    const pattern = shuffle(moves).pop();
+    for (let i = 0; i < pattern.length; i++) {
+      if (isEmpty(pattern[i])) {
+        markCell(pattern[i]);
+        return true;
+      }
+    }
   }
 }
 
