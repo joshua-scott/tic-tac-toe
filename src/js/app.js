@@ -33,18 +33,23 @@ function isGameOver(lastPlayer) {
 }
 
 function checkForWinner() {
-  // Build array to represent the board
-  const board = [];
-  cells.forEach(c => board.push(c.textContent));
-
+  const board = buildBoard();
+  
   // Check the board against 'wins' array
   let result = false;
   wins.forEach(win => {
-    if (threeInARow(board[win[0]], board[win[1]], board[win[2]])) {
+    if (threeInARow(board, ...win)) {
       result = true;
     }
   });
   return result;
+}
+
+// Build array to represent the board
+function buildBoard() {
+  const board = [];
+  cells.forEach(c => board.push(c.textContent));
+  return board;
 }
 
 function checkForDraw() {
@@ -55,19 +60,9 @@ function isEmpty(cell) {
   return cell.textContent === '';
 }
 
-function threeInARow(first, second, third) {
-  return (first !== '' && first === second && second === third);
-}
-
-function cpuMove() {
-  // Just go in the first available place for now...
-  for (let where = 0; where < 9; where++) {
-    if (isEmpty(cells[where])) {
-      cells[where].textContent = 'O';
-      movesMade++;
-      return;
-    }
-  }
+function threeInARow(board, first, second, third) {
+  const b = board;
+  return (b[first] !== '' && b[first] === b[second] && b[second] === b[third]);
 }
 
 function gameOver(winner) {

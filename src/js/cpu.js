@@ -1,88 +1,11 @@
-'use strict';
-
-const cells = document.querySelectorAll('.cell');
-
-const wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], // horizontal
-[0, 3, 6], [1, 4, 7], [2, 5, 8], // vertical
-[0, 4, 8], [2, 4, 6] // diagonal
-];
-
-let movesMade = 0;
-
-function makeMove() {
-  if (!isEmpty(this)) return;
-
-  this.textContent = 'X';
-  movesMade++;
-
-  if (isGameOver('Player')) return;
-
-  cpuMove();
-  isGameOver('CPU');
-}
-
-function isGameOver(lastPlayer) {
-  if (checkForWinner()) {
-    gameOver(lastPlayer);
-    return true;
-  } else if (checkForDraw()) {
-    gameOver('Draw');
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function checkForWinner() {
-  const board = buildBoard();
-
-  // Check the board against 'wins' array
-  let result = false;
-  wins.forEach(win => {
-    if (threeInARow(board, ...win)) {
-      result = true;
-    }
-  });
-  return result;
-}
-
-// Build array to represent the board
-function buildBoard() {
-  const board = [];
-  cells.forEach(c => board.push(c.textContent));
-  return board;
-}
-
-function checkForDraw() {
-  return movesMade >= 9;
-}
-
-function isEmpty(cell) {
-  return cell.textContent === '';
-}
-
-function threeInARow(board, first, second, third) {
-  const b = board;
-  return b[first] !== '' && b[first] === b[second] && b[second] === b[third];
-}
-
-function gameOver(winner) {
-  winner === 'Draw' ? alert(`It's a draw!`) : alert(`${winner} wins!`);
-  newGame();
-}
-
-function newGame() {
-  movesMade = 0;
-  cells.forEach(c => c.textContent = '');
-}
-
-cells.forEach(c => c.addEventListener('click', makeMove));
-'use strict';
-
 function cpuMove() {
   movesMade++;
 
-  if (winOrBlock('win')) return;else if (winOrBlock('block')) return;else if (goInCentre()) return;else if (goInCorner()) return;else goInRemaining();
+  if (winOrBlock('win')) return;
+  else if (winOrBlock('block')) return;
+  else if (goInCentre()) return;
+  else if (goInCorner()) return;
+  else goInRemaining();
 }
 
 function winOrBlock(which) {
@@ -120,7 +43,7 @@ function twoInARow(board, winningPattern, letter) {
       letters++;
     }
   }
-  return blanks === 1 && letters === 2;
+  return (blanks === 1 && letters === 2);
 }
 
 function goInCentre() {
@@ -167,4 +90,3 @@ function trivial() {
     }
   }
 }
-//# sourceMappingURL=app.js.map
