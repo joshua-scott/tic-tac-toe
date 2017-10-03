@@ -92,7 +92,7 @@ cells.forEach(c => c.addEventListener('click', makeMove));
 function cpuMove() {
   movesMade++;
 
-  if (winOrBlock('win')) return;else if (winOrBlock('block')) return;else if (goInCentre()) return;else if (offensiveMove()) return;else goInRemaining();
+  if (winOrBlock('win')) return;else if (winOrBlock('block')) return;else if (goInCentre()) return;else if (coverOppositeCorners()) return;else if (offensiveMove()) return;else goInRemaining();
 }
 
 function winOrBlock(which) {
@@ -143,6 +143,33 @@ function goInCentre() {
   } else {
     return false;
   }
+}
+
+// Prevent losing due to this: http://www.wikihow.com/Win-at-Tic-Tac-Toe
+function coverOppositeCorners() {
+  if (!cornerDanger) return false;
+
+  const middleEdges = shuffle([1, 3, 5, 7]);
+  for (let i = 0; i < middleEdges.length; i++) {
+    if (isEmpty(middleEdges[i])) {
+      markCell(middleEdges[i]);
+      return true;
+    }
+  }
+}
+
+function cornerDanger() {
+  let blankCorners = 0,
+      opponentCorners = 0;
+  const corners = [0, 2, 6, 8];
+  corners.forEach(corner => {
+    if (isEmpty(corner)) {
+      blankCorners++;
+    } else if (cells[corner].textContent === 'X') {
+      opponentCorners++;
+    }
+  });
+  return blankCorners === 2 && opponentCorners === 2;
 }
 
 function offensiveMove() {
