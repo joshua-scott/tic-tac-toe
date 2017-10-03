@@ -9,9 +9,10 @@ const wins = [
 let movesMade = 0;
 
 function makeMove() {
-  if (!isEmpty(this)) return;
+  if (!isEmpty(this.dataset.index)) return;
 
   this.textContent = 'X';
+  this.classList.add('blue');
   movesMade++;
   
   if (isGameOver('Player')) return;
@@ -59,8 +60,8 @@ function checkForDraw() {
   return (movesMade >= 9);
 }
 
-function isEmpty(cell) {
-  return cell.textContent === '';
+function isEmpty(index) {
+  return cells[index].textContent === '';
 }
 
 function threeInARow(board, first, second, third) {
@@ -78,7 +79,10 @@ function gameOver(winner) {
 
 function newGame() {
   movesMade = 0;
-  cells.forEach(c => c.textContent = '');
+  cells.forEach(c => {
+    c.classList.remove('blue', 'red');
+    c.textContent = '';
+  });
 }
 
 cells.forEach(c => c.addEventListener('click', makeMove));

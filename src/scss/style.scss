@@ -3,6 +3,8 @@
 
 $lightgrey: #eee;
 $darkgrey: #555;
+$blue: #0000ff;
+$red: #ff0000;
 
 .board {
   display: flex;
@@ -23,4 +25,10 @@ $darkgrey: #555;
   justify-content: center;
   font-family: 'Arimo', sans-serif;
   font-size: 4em;
+  &.blue {
+    color: $blue;
+  }
+  &.red {
+    color: $red;
+  }
 }
