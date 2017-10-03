@@ -16,8 +16,11 @@ function makeMove() {
   
   if (isGameOver('Player')) return;
 
-  cpuMove();
-  isGameOver('CPU');
+  // Allow a little time for DOM to update (and simulate 'thinking')
+  setTimeout(() => {
+    cpuMove();
+    isGameOver('CPU');
+  }, 500);
 }
 
 function isGameOver(lastPlayer) {
@@ -66,8 +69,11 @@ function threeInARow(board, first, second, third) {
 }
 
 function gameOver(winner) {
-  winner === 'Draw' ? alert(`It's a draw!`) : alert(`${winner} wins!`);
-  newGame();
+  // Allow a little time for DOM to update
+  setTimeout(() => {
+    winner === 'Draw' ? alert(`It's a draw!`) : alert(`${winner} wins!`);
+    newGame();
+  }, 10);
 }
 
 function newGame() {

@@ -16,14 +16,13 @@ function winOrBlock(which) {
 
   if (twos.length === 0) {
     // We can't win/block on this turn
-    console.log(`twos is empty, so can't ${which}`);
     return false;
   } else {
     // We can win/block! Grab one of the winning moves, and fill in the blank
     const winningPattern = shuffle(twos).pop();
     for (let i = 0; i < winningPattern.length; i++) {
-      if (board[winningPattern].textContent === '') {
-        board[winningPattern].textContent = letter;
+      if (isEmpty(cells[winningPattern[i]])) {
+        cells[winningPattern[i]].textContent = 'O';
         return true;
       }
     }
@@ -36,7 +35,7 @@ function twoInARow(board, winningPattern, letter) {
   let letters = 0;
 
   for (let i = 0; i < winningPattern.length; i++) {
-    const cellContents = board[winningPattern[i]].textContent;
+    const cellContents = cells[winningPattern[i]].textContent;
     if (cellContents === '') {
       blanks++;
     } else if (cellContents === letter) {
@@ -78,7 +77,7 @@ function goInRemaining() {
 }
 
 function shuffle(arr) {
-  return arr.sort(() => 0.5 - Math.random);
+  return arr.sort(() => 0.5 - Math.random());
 }
 
 function trivial() {
