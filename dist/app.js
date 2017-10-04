@@ -106,13 +106,8 @@ function winOrBlock(which) {
     return false;
   } else {
     // We can win/block! Grab one of the winning moves, and fill in the blank
-    const winningPattern = shuffle(twos).pop();
-    for (let i = 0; i < winningPattern.length; i++) {
-      if (isEmpty(winningPattern[i])) {
-        markCell(winningPattern[i]);
-        return true;
-      }
-    }
+    markOneOfThese(shuffle(twos).pop());
+    return true;
   }
 }
 
@@ -150,12 +145,8 @@ function coverOppositeCorners() {
   if (!cornerDanger()) return false;
 
   const middleEdges = shuffle([1, 3, 5, 7]);
-  for (let i = 0; i < middleEdges.length; i++) {
-    if (isEmpty(middleEdges[i])) {
-      markCell(middleEdges[i]);
-      return true;
-    }
-  }
+  markOneOfThese(middleEdges);
+  return true;
 }
 
 function cornerDanger() {
@@ -182,23 +173,21 @@ function offensiveMove() {
     return false;
   } else {
     // We can! Grab one of the winning moves, and get one step closer to it
-    const pattern = shuffle(moves).pop();
-    for (let i = 0; i < pattern.length; i++) {
-      if (isEmpty(pattern[i])) {
-        markCell(pattern[i]);
-        return true;
-      }
-    }
+    markOneOfThese(shuffle(moves).pop());
+    return true;
   }
 }
 
 function goInRemaining() {
   const corners = shuffle([0, 2, 6, 8]);
   const remaining = shuffle([1, 3, 5, 7]);
-  const possibleMoves = [...corners, ...remaining];
-  for (let i = 0; i < possibleMoves.length; i++) {
-    if (isEmpty(possibleMoves[i])) {
-      markCell(possibleMoves[i]);
+  markOneOfThese([...corners, ...remaining]);
+}
+
+function markOneOfThese(potentialMoves) {
+  for (let i = 0; i < potentialMoves.length; i++) {
+    if (isEmpty(potentialMoves[i])) {
+      markCell(potentialMoves[i]);
       return true;
     }
   }
