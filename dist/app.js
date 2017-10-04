@@ -147,7 +147,7 @@ function goInCentre() {
 
 // Prevent losing due to this: http://www.wikihow.com/Win-at-Tic-Tac-Toe
 function coverOppositeCorners() {
-  if (!cornerDanger) return false;
+  if (!cornerDanger()) return false;
 
   const middleEdges = shuffle([1, 3, 5, 7]);
   for (let i = 0; i < middleEdges.length; i++) {
