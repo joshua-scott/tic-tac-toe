@@ -11,6 +11,8 @@ let movesMade = 0;
 function makeMove() {
   if (!isEmpty(this.dataset.index)) return;
 
+  stopClicks();
+
   this.textContent = 'X';
   this.classList.add('blue');
   movesMade++;
@@ -20,7 +22,7 @@ function makeMove() {
   // Allow a little time for DOM to update (and simulate 'thinking')
   setTimeout(() => {
     cpuMove();
-    isGameOver('CPU');
+    if (!isGameOver('CPU')) allowClicks();
   }, 500);
 }
 
@@ -74,7 +76,7 @@ function gameOver(winner) {
   setTimeout(() => {
     winner === 'Draw' ? alert(`It's a draw!`) : alert(`${winner} wins!`);
     newGame();
-  }, 10);
+  }, 15);
 }
 
 function newGame() {
@@ -83,6 +85,17 @@ function newGame() {
     c.classList.remove('blue', 'red');
     c.textContent = '';
   });
+  // Refreshing the clicks like this fixes a pesky bug where sometimes no clicks are allowed
+  stopClicks();
+  allowClicks();
 }
 
-cells.forEach(c => c.addEventListener('click', makeMove));
+function allowClicks() {
+  cells.forEach(c => c.addEventListener('click', makeMove));
+}
+
+function stopClicks() {
+  cells.forEach(c => c.removeEventListener('click', makeMove));
+}
+
+allowClicks();
