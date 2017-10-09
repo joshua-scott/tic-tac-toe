@@ -111,8 +111,7 @@ function cpuMove() {
 function winOrBlock(which) {
   const letter = which === 'win' ? 'O' : 'X';
   // Look for 2 in a row, where we can win or block a win
-  const board = buildBoard();
-  const twos = wins.filter(win => isPotentialLineForming(board, win, letter, 1));
+  const twos = wins.filter(win => isPotentialLineForming(win, letter, 1));
 
   if (twos.length === 0) {
     // We can't win/block on this turn
@@ -125,7 +124,7 @@ function winOrBlock(which) {
 }
 
 // Check if there are: two OR one matching letters out of three, with one OR two blank spaces
-function isPotentialLineForming(board = buildBoard(), winningPattern, letter, blanksRequired) {
+function isPotentialLineForming(winningPattern, letter, blanksRequired) {
   let blanks = 0;
   let letters = 0;
 
@@ -237,8 +236,7 @@ function oneEmptyOneX(board, cell1, cell2) {
 
 function offensiveMove() {
   // Look for a 'O' with two blank spaces, where we can make it one away from a win
-  const board = buildBoard();
-  const moves = wins.filter(win => isPotentialLineForming(board, win, 'O', 2));
+  const moves = wins.filter(win => isPotentialLineForming(win, 'O', 2));
 
   if (moves.length === 0) {
     // We can't go one the offensive on this turn
